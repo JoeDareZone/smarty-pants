@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
                 child: GridView.builder(
                     itemCount: mySmartDevices.length,
+                    padding: const EdgeInsets.all(25),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2),
