@@ -15,10 +15,10 @@ class _HomePageState extends State<HomePage> {
 
   // list of smart devices
   List mySmartDevices = [
-    ["Smart Light", "lib/icons/light-bulb.png", true],
-    ["Smart AC", "lib/icons/light-bulb.png", false],
-    ["Smart TV", "lib/icons/light-bulb.png", false],
-    ["Smart Fan", "lib/icons/light-bulb.png", false]
+    ["Smart Light", "lib/icons/lightbulb.png", true],
+    ["Smart AC", "lib/icons/aircon.png", false],
+    ["Smart TV", "lib/icons/tv.png", false],
+    ["Smart Fan", "lib/icons/fan.png", false]
   ];
 
   @override
