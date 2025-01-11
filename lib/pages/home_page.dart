@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 25),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Column(
@@ -83,9 +83,9 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 24,
                       color: Colors.grey[800]),
                 )),
-            const SizedBox(height: 25),
             Expanded(
                 child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: mySmartDevices.length,
                     padding: const EdgeInsets.all(25),
                     gridDelegate:
