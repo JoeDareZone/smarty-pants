@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smarty_pants/util/smart_device_box.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,15 +62,28 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text("Welcome Home,"),
-                    Text("JOE", style: TextStyle(fontSize: 40)),
+                  children: [
+                    Text(
+                      "Welcome Home,",
+                      style: TextStyle(fontSize: 20, color: Colors.grey[700]),
+                    ),
+                    Text("JOE", style: GoogleFonts.bebasNeue(fontSize: 72)),
                   ],
                 )),
-            const SizedBox(height: 20),
+            const SizedBox(height: 25),
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Text("Smart Devices")),
+                child: Divider(color: Colors.grey[400], thickness: 1)),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                child: Text(
+                  "Smart Devices",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      color: Colors.grey[800]),
+                )),
+            const SizedBox(height: 25),
             Expanded(
                 child: GridView.builder(
                     itemCount: mySmartDevices.length,
