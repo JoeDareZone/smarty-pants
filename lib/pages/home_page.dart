@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smarty_pants/util/smart_device_box.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -70,9 +71,11 @@ class _HomePageState extends State<HomePage> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2),
                     itemBuilder: (context, index) {
-                      return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(color: Colors.blue));
+                      return SmartDeviceBox(
+                        smartDeviceName: mySmartDevices[index][0],
+                        iconPath: mySmartDevices[index][1],
+                        powerOn: mySmartDevices[index][2],
+                      );
                     }))
           ],
         )));
