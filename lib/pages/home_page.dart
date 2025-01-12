@@ -1,46 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:smarty_pants/util/smart_device_box.dart';
 
-class HomePage extends StatefulWidget {
+import '../smart_device_state.dart';
+
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  // padding constants
-  final double horizontalPadding = 40;
-  final double verticalPadding = 25;
-
-  // list of smart devices
-  List mySmartDevices = [
-    ["Smart Light", "lib/icons/lightbulb.png", true],
-    ["Smart AC", "lib/icons/aircon.png", false],
-    ["Smart TV", "lib/icons/tv.png", false],
-    ["Smart Fan", "lib/icons/fan.png", false]
-  ];
-
-  void powerSwitchChanged(bool val, int index) => {
-        setState(() {
-          mySmartDevices[index][2] = val;
-        })
-      };
-
-  @override
   Widget build(BuildContext context) {
+    final smartDeviceState = Provider.of<SmartDeviceState>(context);
+
     return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SafeArea(
-            child: Column(
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: horizontalPadding,
-                vertical: verticalPadding,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -59,47 +38,58 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 25),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Welcome Home,",
-                      style: TextStyle(fontSize: 20, color: Colors.grey[700]),
-                    ),
-                    Text("JOE", style: GoogleFonts.bebasNeue(fontSize: 72)),
-                  ],
-                )),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Welcome Home,",
+                    style: TextStyle(fontSize: 20, color: Colors.grey[700]),
+                  ),
+                  Text("JOE", style: GoogleFonts.bebasNeue(fontSize: 72)),
+                ],
+              ),
+            ),
             const SizedBox(height: 25),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Divider(color: Colors.grey[400], thickness: 1)),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: ElevatedButton(
+                onPressed: () {
+                  final allOn = smartDeviceState.mySmartDevices
+                      .any((device) => !device[2]);
+                  smartDeviceState.toggleAllDevices(allOn);
+                },
                 child: Text(
-                  "Smart Devices",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: Colors.grey[800]),
-                )),
+                  "Toggle All",
+                  style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                ),
+              ),
+            ),
             Expanded(
-                child: GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: mySmartDevices.length,
-                    padding: const EdgeInsets.all(25),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, childAspectRatio: 1 / 1.3),
-                    itemBuilder: (context, index) {
-                      return SmartDeviceBox(
-                        smartDeviceName: mySmartDevices[index][0],
-                        iconPath: mySmartDevices[index][1],
-                        powerOn: mySmartDevices[index][2],
-                        onChanged: (val) => powerSwitchChanged(val, index),
-                      );
-                    }))
+              child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: smartDeviceState.mySmartDevices.length,
+                padding: const EdgeInsets.all(25),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.3,
+                ),
+                itemBuilder: (context, index) {
+                  final device = smartDeviceState.mySmartDevices[index];
+                  return SmartDeviceBox(
+                    smartDeviceName: device[0],
+                    iconPath: device[1],
+                    powerOn: device[2],
+                    onChanged: (val) {
+                      smartDeviceState.toggleDevicePower(index, val);
+                    },
+                  );
+                },
+              ),
+            ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

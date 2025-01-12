@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:smarty_pants/pages/home_page.dart';
+import 'package:provider/provider.dart';
+
+import 'pages/home_page.dart';
+import 'smart_device_state.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => SmartDeviceState(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,8 +19,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage()
-    );
-  } 
+    return MaterialApp(home: HomePage());
+  }
 }
